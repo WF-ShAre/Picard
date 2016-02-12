@@ -1,5 +1,5 @@
 # Picard
-![myimage-alt-tag](https://github.com/WorkflowCenter-Repositories/NJ-WF/raw/master/WF%20structure.png)
+![myimage-alt-tag](https://github.com/WorkflowCenter-Repositories/Picard/raw/master/picard.png)
 
 
   WF-Title: Neighbour Joining
