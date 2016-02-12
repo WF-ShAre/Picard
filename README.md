@@ -23,10 +23,10 @@ The Sequence Cleaning workflow (SC) is one of the steps in the Next Generation S
 
 ###Input:
 
-  input-Dir:  {
+  input-Dir:  {  
   Probe.PFC_0030_MSt_GAGTGG.sorted.bam.bai, Probe.PFC_0030_MSt_GAGTGG.sorted.bam,                                                       Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.bai,                                                
   Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.bam,                                                                          Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bai,                                                             Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bam
-              }
+              }  
   description: input Dir including 5 input files
   types: 
 
