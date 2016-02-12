@@ -23,17 +23,19 @@ The Sequence Cleaning workflow (SC) is one of the steps in the Next Generation S
 
 ###Input:
 
-  input-Dir:  {Probe.PFC_0030_MSt_GAGTGG.sorted.bam.bai, Probe.PFC_0030_MSt_GAGTGG.sorted.bam,                                                       Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.bai,                                                
-               Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.bam,                                                                          Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bai,                                                             Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bam}
+  input-Dir:  {
+  Probe.PFC_0030_MSt_GAGTGG.sorted.bam.bai, Probe.PFC_0030_MSt_GAGTGG.sorted.bam,                                                       Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.bai,                                                
+  Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.bam,                                                                          Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bai,                                                             Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bam
+              }
   description: input Dir including 5 input files
   types: 
 
 ###Outputs:
 
   output-folder: '~/blueprint-name'
-  output-file(s): {'analysis-output', 'consensus-output', 'summary-info', 'removed-sequences', 'sequence-map'}
+  output-file(s): {'}
   description:
-  types: {' ', ' ', ' ', csv-file, csv-file}
+  types: {' ', ' '}
 
 ###Execution-Environment:
 
@@ -44,15 +46,15 @@ The Sequence Cleaning workflow (SC) is one of the steps in the Next Generation S
   RAM: 3 GB
 
 #Deployment Instruction
-This repository includes all files and scripts to deploy Nieghbour Joining workflow on Multiple Docker containers as follow:
+This repository includes all files and scripts to deploy Picard workflow on Multiple Docker containers as follow:
 
 1- Clone the repository to your machine, open a terminal window and change to workflow repository.
 2- To execute the workflow with multi containers and the attached input sample, in the terminal run: 
-   . ./NJ-deploy.sh 1  
-3- If you have own input files, copy your files to NJ/WF/Input-sample folder, open Input.yaml file and change input files name, then
-   run: . ./NJ-deploy.sh 1
+   . ./Picard-deploy.sh 1  
+3- If you have own input files, copy your files Dir to Picard/Input-sample folder, open Input.yaml file and change input Dir name, then
+   run: . ./Picard-deploy.sh 1
 
 4- To execute the workflow with single container, follow either step 2 or 3 but run:  
-   . ./NJ-deploy 2
+   . ./Picard-deploy 2
   
-After successfully running the workflow, five output files can be found in ~/realeScWF-inhots folder
+After successfully running the workflow, five output files can be found in ~/blueprint-name folder
