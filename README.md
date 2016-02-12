@@ -1,6 +1,7 @@
 # Picard
 ![myimage-alt-tag](https://github.com/WorkflowCenter-Repositories/Picard/raw/master/picard.png)
 
+The Sequence Cleaning workflow (SC) is one of the steps in the Next Generation Sequencing pipeline.
 
   WF-Title: Neighbour Joining
   version: 1.0
