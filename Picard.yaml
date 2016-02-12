@@ -522,7 +522,7 @@ node_templates:
     type: exportfiles
     properties:
       block_description: export files
-      block_name: ExportFiles1.jar
+      block_name: exportfiles1.jar
       block_category: File Management
       service_type: block
     relationships:
@@ -550,7 +550,7 @@ node_templates:
           implementation: scripts/block-deploy3.sh
           inputs:
             process:
-             args: [Picard, container7, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/ExportFiles1.jar']
+             args: [Picard, container7, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
 
   container8:
     type: docker_container
@@ -588,7 +588,7 @@ node_templates:
     type: exportfiles
     properties:
       block_description: export files
-      block_name: ExportFiles1.jar
+      block_name: exportfiles1.jar
       block_category: File Management
       service_type: block
     relationships:
@@ -611,7 +611,7 @@ node_templates:
           implementation: scripts/block-deploy3.sh
           inputs:
             process:
-             args: [Picard, container8, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/ExportFiles1.jar']
+             args: [Picard, container8, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule
