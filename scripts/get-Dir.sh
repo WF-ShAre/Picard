@@ -2,15 +2,13 @@
 
 set -e
 blueprint=$1
-Dir=$(ctx node properties SourceFolder)
+Dir=$2 
 
-sourceDir=${HOME}/${blueprint}/$(basename "$Dir")
+sourceDir=~/${blueprint}/$(basename "$Dir")
 
-input=${HOME}/${Dir}
-
-ctx logger info "copy the Dir"
+#ctx logger info "copy the Dir"
 
 
-cp -r ${input} ${sourceDir}
+cp -r ${Dir} ${sourceDir}
 
 
