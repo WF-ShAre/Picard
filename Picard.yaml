@@ -72,7 +72,7 @@ node_templates:
   Java:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
@@ -130,7 +130,7 @@ node_templates:
   Java1:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
@@ -198,7 +198,7 @@ node_templates:
   Java2:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
@@ -266,7 +266,7 @@ node_templates:
   Java3:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
@@ -336,7 +336,7 @@ node_templates:
   Java4:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
@@ -412,7 +412,7 @@ node_templates:
   Java5:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
@@ -492,7 +492,7 @@ node_templates:
   Java6:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
@@ -558,7 +558,7 @@ node_templates:
   Java7:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:

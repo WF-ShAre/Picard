@@ -17,7 +17,7 @@ inputs:
   docker-image: 
       description: > 
         Docker image to be used for container building
-      default: 'rawa/ubuntu14'
+      default: 'ubuntu:14.04'
 
 node_types:
 
@@ -72,7 +72,7 @@ node_templates:
   Java:
     type: spec_library
     properties:
-      lib_name: default-jdk
+      lib_name: ioenjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
