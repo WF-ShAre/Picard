@@ -28,12 +28,11 @@ The Sequence Cleaning workflow (SC) is one of the steps in the Next Generation S
   Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.bam,                                                                          Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bai,                                                             Probe.PFC_0030_MSt_GAGTGG_nodups.sorted.realigned.Recal.reducedReads.bam  
               }  
   description: input Dir including 5 input files
-  types: 
 
 ###Outputs:
 
   output-folder: '~/blueprint-name'  
-  output-file(s): {'}  
+  output-file(s): {index-BAI-files, output-SAM_BAM-files}  
   description:  
   types: {' ', ' '}  
 
