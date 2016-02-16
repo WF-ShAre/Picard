@@ -17,7 +17,7 @@ inputs:
   docker-image: 
       description: > 
         Docker image to be used for container building
-      default: 'ubuntu:14.04'
+      default: 'rawa/picard:01'
 
 node_types:
 
