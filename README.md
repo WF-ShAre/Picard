@@ -17,7 +17,7 @@ The Sequence Cleaning workflow (SC) is one of the steps in the Next Generation S
 
   blueprint-name: Picard.yaml  
   Docker-images: rawa/picard:01  
-  sizes: 434 MB (Virtual size 745.2 MB)  
+  sizes: 268 MB (Virtual size 594.6 MB)  
   OS-types: ubuntu14.4  
   tools: Java1.7, SAMTools-lib  
   
