@@ -1,6 +1,4 @@
-input-dir: 'Input-sample'      #folder path of the input files
-input-file1: 'file1.txt'  #first input file
-input-file2: 'file2.txt'  #second input file
+input-dir: 'Input-sample/Data'      #folder path of the input files
 docker-image: 'rawa/nj'   #Docker image
 
 

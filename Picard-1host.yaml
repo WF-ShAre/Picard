@@ -9,26 +9,15 @@ imports:
 
 inputs:
 
-  host_ip:
+  input-dir:
       description: >
-        The ip of the host the application will be deployed on  
-      default: 127.0.0.1
+        The dir path of the input files  
+      default: '~/myDir/Data'
 
-  agent_user:
-      description: >
-        User name used when SSH-ing into the started machine
-      default: ubuntu
-
-  agent_private_key_path:
-      description: >
-        Path to a private key that resided on the management machine.
-        SSH-ing into agent machines will be done with this key.
-      default: ~/.ssh/agent_key.pem
-
-  install_agent: 
+  docker-image: 
       description: > 
-        When running in local mode set this to false
-      default: false
+        Docker image to be used for container building
+      default: 'rawa/ubuntu14'
 
 node_types:
 
@@ -37,7 +26,7 @@ node_types:
     properties:
       image_name:
         type: string
-        default: complete:v2 #rawa/mybase:01
+        default: { get_input: docker-image }
       container_ID:
         type: string
         default: container1
@@ -47,11 +36,8 @@ node_templates:
   host:
     type: cloudify.nodes.Compute
     properties:
-      install_agent: { get_input: install_agent }
-      ip: { get_input: host_ip }
-      cloudify_agent:
-        user: { get_input: agent_user }
-        key: { get_input: agent_private_key_path }
+      ip: localhost
+      install_agent: false
 
   starterBlock:
     type: cloudify.nodes.ApplicationModule
@@ -102,22 +88,22 @@ node_templates:
     type: Import-Dir
     properties:
       block_description: import Dir
-      block_name: ImportDir.jar
+      block_name: importdir1.jar
       block_category: File Management
       service_type: block
-      SourceFolder: 'myDir/Data'
+      SourceFolder: { get_input: input-dir }
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
           implementation: scripts/get-Dir.sh
           inputs:
             process:
-             args: [Picard-1host]
+             args: [Picard-1host, { get_input: input-dir }]
         start: 
           implementation: scripts/block-deploy3.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/ImportDir.jar']
+             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importdir1.jar', { get_input: input-dir }]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container1
@@ -256,14 +242,14 @@ node_templates:
     properties:
       lib_name: samtools
       lib_URL: 'https://github.com/rawaqasha/work/raw/master/samtools'
-      lib_path: Picard-1host
+      lib_path: SAMTools
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
           implementation: scripts/SAMTools-install.sh
           inputs:
             process:
-              args: [container1]
+              args: [container1, Picard-1host]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container1
@@ -272,7 +258,7 @@ node_templates:
     type: SAMtools-index
     properties:
       block_description: I don't know
-      block_name: SAMTools.jar
+      block_name: samtools1.jar
       block_category: File Management
       service_type: block
     relationships:
@@ -295,13 +281,13 @@ node_templates:
           implementation: scripts/block-deploy3.sh
           inputs:
             process:
-              args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/SAMTools.jar',  get_property: [SAMTools-Lib, lib_path]]
+              args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/samtools1.jar']
 
   ExportFiles1:
     type: exportfiles
     properties:
       block_description: export files
-      block_name: ExportFiles1.jar
+      block_name: exportfiles1.jar
       block_category: File Management
       service_type: block
     relationships:
@@ -322,13 +308,13 @@ node_templates:
           implementation: scripts/block-deploy3.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/ExportFiles1.jar']
+             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
 
   ExportFiles2:
     type: exportfiles
     properties:
       block_description: export files
-      block_name: ExportFiles1.jar
+      block_name: exportfiles1.jar
       block_category: File Management
       service_type: block
     relationships:
@@ -349,7 +335,7 @@ node_templates:
           implementation: scripts/block-deploy3.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/ExportFiles1.jar']
+             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule

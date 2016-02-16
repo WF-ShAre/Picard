@@ -429,14 +429,14 @@ node_templates:
     properties:
       lib_name: samtools
       lib_URL: 'https://github.com/rawaqasha/work/raw/master/samtools'
-      lib_path: Picard
+      lib_path: SAMTools
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
           implementation: scripts/SAMTools-install.sh
           inputs:
             process:
-              args: [container6]
+              args: [container6, Picard]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container6
@@ -445,7 +445,7 @@ node_templates:
     type: SAMtools-index
     properties:
       block_description: I don't know
-      block_name: SAMTools.jar
+      block_name: samtools1.jar
       block_category: File Management
       service_type: block
     relationships:
@@ -470,7 +470,7 @@ node_templates:
           implementation: scripts/block-deploy3.sh
           inputs:
             process:
-              args: [Picard, container6, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/SAMTools.jar']
+              args: [Picard, container6, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/samtools1.jar']
 
   container7:
     type: docker_container
