@@ -1,0 +1,1 @@
+{"relationships": [{"target_name": "Picard-Add", "type": "block_link", "target_id": "Picard-Add_eeafa"}, {"target_name": "container1", "type": "cloudify.relationships.contained_in", "target_id": "container1_f3653"}], "name": "ExportFiles2", "runtime_properties": {}, "state": "started", "node_id": "ExportFiles2", "version": 7, "host_id": "host_f2184", "id": "ExportFiles2_97619"}
