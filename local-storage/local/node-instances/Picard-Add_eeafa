@@ -1,1 +1,0 @@
-{"relationships": [{"target_name": "Picard-Mark", "type": "block_link", "target_id": "Picard-Mark_3a9ed"}, {"target_name": "container1", "type": "cloudify.relationships.contained_in", "target_id": "container1_f3653"}], "name": "Picard-Add", "runtime_properties": {}, "state": "started", "node_id": "Picard-Add", "version": 7, "host_id": "host_f2184", "id": "Picard-Add_eeafa"}
