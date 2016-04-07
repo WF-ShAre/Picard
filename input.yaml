@@ -1,5 +1,5 @@
-input-dir: '~/Exps/myData'      #folder path of the input files
-docker-image: 'rawa/picard:01'   #Docker image
+input-dir: 'Input-sample/Data'      #folder path of the input files
+docker-image: 'dtdwd/picard1'   #Docker image
 
 
 
