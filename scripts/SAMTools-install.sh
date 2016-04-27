@@ -7,6 +7,7 @@ Lib_URL=$(ctx node properties lib_URL)
 Lib_Path=$(ctx node properties lib_path)
 Lib_name=$(ctx node properties lib_name)
 
+sudo docker exec -it ${CONTAINER_ID} [ -f ${Lib_Path}/${Lib_name} ] && exit 0
 set +e
   Wget=$(which wget)
 set -e
