@@ -44,7 +44,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/start-inhost.sh
+          implementation: Core-LifecycleScripts/start-inhost.sh
           inputs:
             process:
               args: [Picard]
@@ -59,7 +59,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -100,7 +100,7 @@ node_templates:
             process:
              args: [Picard, { get_input: input-dir }]
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [Picard, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importdir1.jar', { get_input: input-dir }]
@@ -117,7 +117,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:        
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -154,12 +154,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container1]
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [Picard, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Pick-Files.jar']
@@ -169,7 +169,7 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [ImportDir/imported-files, PickFiles/input-files, Picard, container2]
@@ -185,7 +185,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -227,7 +227,7 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [PickFiles/selected-files, PicardCleanSAM/input-SAM_BAM-files, Picard, container3]
@@ -236,12 +236,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container2]
         start:
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [Picard, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-CleanSAM.jar']
@@ -253,7 +253,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -299,19 +299,19 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [PicardCleanSAM/cleaned-SAM_BAM-files, Picard-Mark/input-SAM_BAM-files, Picard, container4]
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container3]
         start:
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
               args: [Picard, container4, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Mark.jar']
@@ -323,7 +323,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -375,19 +375,19 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [Picard-Mark/marked-SAM_BAM-file, Picard-Add/input-SAM_BAM-files, Picard, container5]        
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container4]
         start:
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
               args: [Picard, container5, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Add.jar']
@@ -399,7 +399,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -460,14 +460,14 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [Picard-Add/output-SAM_BAM-files, SAMTools/input-BAM-files, Picard, container6]        
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
               args: [Picard, container6, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/samtools1.jar']
@@ -479,7 +479,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -519,7 +519,7 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [SAMTools/index-BAI-files, ExportFiles1/file-list, Picard, container7]
@@ -528,12 +528,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container6]
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [Picard, container7, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
@@ -545,7 +545,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
-          implementation: scripts/container.sh
+          implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
               args: [Picard]
@@ -585,7 +585,7 @@ node_templates:
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
-              implementation: scripts/datacopy.sh
+              implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
                   args: [Picard-Add/output-SAM_BAM-files, ExportFiles2/file-list, Picard, container8]
@@ -594,7 +594,7 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         start: 
-          implementation: scripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/block-deploy3.sh
           inputs:
             process:
              args: [Picard, container8, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
@@ -604,12 +604,12 @@ node_templates:
     interfaces:
       cloudify.interfaces.lifecycle:
         configure:
-          implementation: scripts/containers-clean.sh
+          implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
               args: [container5, container8, container7]
         start:
-          implementation: scripts/final-inhost.sh
+          implementation: Core-LifecycleScripts/final-inhost.sh
           inputs:
             process:
               args: [Picard]
