@@ -19,6 +19,11 @@ inputs:
         Docker image to be used for container building
       default: 'rawa/picard:01'
 
+  create_image:
+      description: > 
+        an option to create Docker images
+      default: 'False'
+
 node_types:
 
   docker_container:
@@ -94,16 +99,21 @@ node_templates:
       SourceFolder: { get_input: input-dir }
     interfaces:
       cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
+          inputs:
+            process:
+             args: [{ get_input: create_image }, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importdir1.jar']
         configure:
           implementation: scripts/get-Dir.sh
           inputs:
             process:
              args: [Picard, { get_input: input-dir }]
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importdir1.jar', { get_input: input-dir }]
+             args: [Picard, container1, { get_input: input-dir }]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container1
@@ -153,16 +163,21 @@ node_templates:
       PickByIndex: 'false'
     interfaces:
       cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
+          inputs:
+            process:
+             args: [{ get_input: create_image }, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Pick-Files.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container1]
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard, container2, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Pick-Files.jar']
+             args: [Picard, container2]
     relationships:
       - type: block_link
         target: ImportDir
@@ -235,16 +250,21 @@ node_templates:
         target: Java2
     interfaces:
       cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
+          inputs:
+            process:
+             args: [{ get_input: create_image }, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-CleanSAM.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container2]
         start:
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard, container3, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-CleanSAM.jar']
+             args: [Picard, container3]
 
   container4:
     type: docker_container
@@ -305,16 +325,21 @@ node_templates:
                   args: [PicardCleanSAM/cleaned-SAM_BAM-files, Picard-Mark/input-SAM_BAM-files, Picard, container4]
     interfaces:
       cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
+          inputs:
+            process:
+             args: [{ get_input: create_image }, container4, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Mark.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container3]
         start:
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-              args: [Picard, container4, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Mark.jar']
+              args: [Picard, container4]
 
   container5:
     type: docker_container
@@ -381,16 +406,21 @@ node_templates:
                   args: [Picard-Mark/marked-SAM_BAM-file, Picard-Add/input-SAM_BAM-files, Picard, container5]        
     interfaces:
       cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
+          inputs:
+            process:
+             args: [{ get_input: create_image }, container5, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Add.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container4]
         start:
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-              args: [Picard, container5, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Add.jar']
+              args: [Picard, container5]
 
   container6:
     type: docker_container
@@ -466,11 +496,16 @@ node_templates:
                   args: [Picard-Add/output-SAM_BAM-files, SAMTools/input-BAM-files, Picard, container6]        
     interfaces:
       cloudify.interfaces.lifecycle:
-        start:
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
           inputs:
             process:
-              args: [Picard, container6, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/samtools1.jar']
+             args: [{ get_input: create_image }, container6, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/samtools1.jar']
+        start:
+          implementation: Core-LifecycleScripts/task-deploy.sh
+          inputs:
+            process:
+              args: [Picard, container6]
 
   container7:
     type: docker_container
@@ -527,16 +562,21 @@ node_templates:
         target: Java6
     interfaces:
       cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
+          inputs:
+            process:
+             args: [{ get_input: create_image }, container7, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
              args: [container6]
         start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+          implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard, container7, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+             args: [Picard, container7]
 
   container8:
     type: docker_container
@@ -593,11 +633,16 @@ node_templates:
         target: Java7
     interfaces:
       cloudify.interfaces.lifecycle:
-        start: 
-          implementation: Core-LifecycleScripts/block-deploy3.sh
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
           inputs:
             process:
-             args: [Picard, container8, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+             args: [{ get_input: create_image }, container8, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+        start: 
+          implementation: Core-LifecycleScripts/task-deploy.sh
+          inputs:
+            process:
+             args: [Picard, container8]
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule
