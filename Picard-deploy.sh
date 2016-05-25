@@ -27,11 +27,11 @@ if [[ ${wf} == 1 ]]; then
    fi
   cfy local init --install-plugins -p Picard.yaml --input input.yaml
 else
-   if [[ -d ~/Picard-1host ]]; then
+   if [[ -d ~/Picard-1container ]]; then
       echo "previous workflow execution exists and will be deleted"
-      rm -rf ~/Picard-1host
+      rm -rf ~/Picard-1container
    fi
-  cfy local init --install-plugins -p Picard-1host.yaml -i input.yaml
+  cfy local init --install-plugins -p Picard-1container.yaml -i input.yaml
 fi
 
 cfy local execute -w install

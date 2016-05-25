@@ -1,4 +1,4 @@
-#eSc Picard-1host workflow with 8 real block def. deployed on 8 containers
+#eSc Picard-1container workflow with 8 real block def. deployed on 8 containers
 
 tosca_definitions_version: cloudify_dsl_1_0
 
@@ -52,7 +52,7 @@ node_templates:
           implementation: Core-LifecycleScripts/start-inhost.sh
           inputs:
             process:
-              args: [Picard-1host]
+              args: [Picard-1container]
     relationships:
       - type: cloudify.relationships.contained_in
         target: host
@@ -67,7 +67,7 @@ node_templates:
           implementation: Core-LifecycleScripts/container.sh
           inputs:
             process:
-              args: [Picard-1host]
+              args: [Picard-1container]
     relationships:
       - type: cloudify.relationships.contained_in
         target: host
@@ -103,17 +103,17 @@ node_templates:
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importdir1.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/importdir1.jar']
         configure:
           implementation: scripts/get-Dir.sh
           inputs:
             process:
-             args: [Picard-1host, { get_input: input-dir }]
+             args: [Picard-1container, { get_input: input-dir }]
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard-1host, container1, { get_input: input-dir }]
+             args: [Picard-1container, container1, { get_input: input-dir }]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container1
@@ -135,12 +135,12 @@ node_templates:
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Pick-Files.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Pick-Files.jar']
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard-1host, container1]
+             args: [Picard-1container, container1]
     relationships:
       - type: block_link
         target: ImportDir
@@ -150,7 +150,7 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [ImportDir/imported-files, PickFiles/input-files, Picard-1host, container1]
+                  args: [ImportDir/imported-files, PickFiles/input-files, Picard-1container, container1]
       - type: cloudify.relationships.contained_in
         target: container1
 
@@ -174,19 +174,19 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [PickFiles/selected-files, PicardCleanSAM/input-SAM_BAM-files, Picard-1host, container1]
+                  args: [PickFiles/selected-files, PicardCleanSAM/input-SAM_BAM-files, Picard-1container, container1]
     interfaces:
       cloudify.interfaces.lifecycle:
         create: 
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-CleanSAM.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-CleanSAM.jar']
         start:
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard-1host, container1]
+             args: [Picard-1container, container1]
 
   Picard-Mark:
     type: picard-MarkDuplicates
@@ -210,19 +210,19 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [PicardCleanSAM/cleaned-SAM_BAM-files, Picard-Mark/input-SAM_BAM-files, Picard-1host, container1]
+                  args: [PicardCleanSAM/cleaned-SAM_BAM-files, Picard-Mark/input-SAM_BAM-files, Picard-1container, container1]
     interfaces:
       cloudify.interfaces.lifecycle:
         create: 
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Mark.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Mark.jar']
         start:
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-              args: [Picard-1host, container1]
+              args: [Picard-1container, container1]
 
   Picard-Add:
     type: picard-ADDOrReplaceRG
@@ -254,19 +254,19 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [Picard-Mark/marked-SAM_BAM-file, Picard-Add/input-SAM_BAM-files, Picard-1host, container1]        
+                  args: [Picard-Mark/marked-SAM_BAM-file, Picard-Add/input-SAM_BAM-files, Picard-1container, container1]        
     interfaces:
       cloudify.interfaces.lifecycle:
         create: 
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Add.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/Picard-Add.jar']
         start:
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-              args: [Picard-1host, container1]
+              args: [Picard-1container, container1]
 
   SAMTools-Lib:
     type: SAMTools-lib
@@ -280,7 +280,7 @@ node_templates:
           implementation: scripts/SAMTools-install.sh
           inputs:
             process:
-              args: [container1, Picard-1host]
+              args: [container1, Picard-1container]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container1
@@ -305,19 +305,19 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [Picard-Add/output-SAM_BAM-files, SAMTools/input-BAM-files, Picard-1host, container1]        
+                  args: [Picard-Add/output-SAM_BAM-files, SAMTools/input-BAM-files, Picard-1container, container1]        
     interfaces:
       cloudify.interfaces.lifecycle:
         create: 
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/samtools1.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/samtools1.jar']
         start:
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-              args: [Picard-1host, container1]
+              args: [Picard-1container, container1]
 
   ExportFiles1:
     type: exportfiles
@@ -337,19 +337,19 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [SAMTools/index-BAI-files, ExportFiles1/file-list, Picard-1host, container1]
+                  args: [SAMTools/index-BAI-files, ExportFiles1/file-list, Picard-1container, container1]
     interfaces:
       cloudify.interfaces.lifecycle:
         create: 
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard-1host, container1]
+             args: [Picard-1container, container1]
 
   ExportFiles2:
     type: exportfiles
@@ -369,19 +369,19 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [Picard-Add/output-SAM_BAM-files, ExportFiles2/file-list, Picard-1host, container1]
+                  args: [Picard-Add/output-SAM_BAM-files, ExportFiles2/file-list, Picard-1container, container1]
     interfaces:
       cloudify.interfaces.lifecycle:
         create: 
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1host, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard-1host, container1]
+             args: [Picard-1container, container1]
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule
@@ -401,7 +401,7 @@ node_templates:
           implementation: Core-LifecycleScripts/final-inhost.sh
           inputs:
             process:
-              args: [Picard-1host]
+              args: [Picard-1container]
     relationships:
       - type: cloudify.relationships.contained_in
         target: host
