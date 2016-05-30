@@ -458,15 +458,15 @@ node_templates:
     type: SAMTools-lib
     properties:
       lib_name: samtools
-      lib_URL: 'https://github.com/rawaqasha/work/raw/master/samtools'
-      lib_path: SAMTools
+      lib_URL: 'https://github.com/rawaqasha/Libs/raw/master/SAMTools.tar.gz'
+      lib_path: 'SAMTools'
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
-          implementation: scripts/SAMTools-install.sh
+          implementation: Core-LifecycleScripts/Lib-install.sh
           inputs:
             process:
-              args: [container6, Picard]
+              args: [container6, get_property: [SAMTools-Lib, lib_URL]]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container6
