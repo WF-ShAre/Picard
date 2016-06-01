@@ -28,8 +28,15 @@ set -e
             java=$(sudo docker exec -it ${CONTAINER_ID} which java)
            set -e
            if [[ -z ${java} ]]; then
+	      if [[ ${LIBRARY_NAME} == 'openjdk-8-jdk' ]]; then
+                 sudo docker exec -it ${CONTAINER_ID} apt-get update
+                 sudo docker exec -it ${CONTAINER_ID} apt-get install -y software-properties-common
+                 echo "install repo"
+                 sudo docker exec -it ${CONTAINER_ID} apt-add-repository -y ppa:openjdk-r/ppa
+              fi
+      echo "install java"        
               sudo docker exec -it ${CONTAINER_ID} apt-get update
-              sudo docker exec -it ${CONTAINER_ID} apt-get -y install ${LIBRARY_NAME}
+              sudo docker exec -it ${CONTAINER_ID} apt-get install -y ${LIBRARY_NAME}
            fi
         fi
   

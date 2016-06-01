@@ -77,7 +77,7 @@ node_templates:
   Java:
     type: spec_library
     properties:
-      lib_name: openjdk-7-jre
+      lib_name: openjdk-8-jdk #openjdk-7-jre
     interfaces:
       cloudify.interfaces.lifecycle:
         create:
