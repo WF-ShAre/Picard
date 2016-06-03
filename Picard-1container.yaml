@@ -351,6 +351,40 @@ node_templates:
             process:
              args: [Picard-1container, container1]
 
+  ZipFile:
+    type: zipFile
+    properties:
+      block_description: invert the column of csv file
+      block_name: filezip1.jar
+      block_category: File Management
+      service_type: block
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-single.sh
+          inputs:
+            process:
+             args: [Picard-1container, container1, 'https://github.com/WorkflowCenter-Repositories/ZipFile-Task/raw/v1.0/filezip1.jar']
+        start: 
+          implementation: Core-LifecycleScripts/task-deploy.sh
+          inputs:
+            process:
+             args: [Picard-1container, container1]
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: container1
+      - type: cloudify.relationships.depends_on
+        target: Java
+      - type: block_link
+        target: Picard-Add
+        source_interfaces:
+          cloudify.interfaces.relationship_lifecycle:
+            preconfigure:
+              implementation: Core-LifecycleScripts/datacopy.sh
+              inputs:
+                process:
+                  args: [Picard-Add/output-SAM_BAM-files, ZipFile/input-1, Picard-1container, container1]
+
   ExportFiles2:
     type: exportfiles
     properties:
@@ -362,26 +396,26 @@ node_templates:
       - type: cloudify.relationships.contained_in
         target: container1
       - type: block_link
-        target: Picard-Add
+        target: ZipFile
         source_interfaces:
           cloudify.interfaces.relationship_lifecycle:
             preconfigure:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [Picard-Add/output-SAM_BAM-files, ExportFiles2/file-list, Picard-1container, container1]
+                  args: [ZipFile/output-1, ExportFiles2/file-list, Picard-1container, container1]
     interfaces:
       cloudify.interfaces.lifecycle:
         create: 
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1container, container1, 'https://github.com/WorkflowCenter-Repositories/ExportFiles-Task/raw/v1.0/exportfiles1.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard-1container, container1]
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule
@@ -391,12 +425,12 @@ node_templates:
           implementation: Core-LifecycleScripts/image_create.sh
           inputs:
             process:
-             args: [picard, container1, { get_input: create_image }]
+             args: [picard-new, container1, { get_input: create_image }]
         configure:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
-             args: [container1]
+              args: [container1]
         start:
           implementation: Core-LifecycleScripts/final-inhost.sh
           inputs:

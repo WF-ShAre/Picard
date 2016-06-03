@@ -610,6 +610,72 @@ node_templates:
       - type: cloudify.relationships.contained_in
         target: container8
 
+  ZipFile:
+    type: zipFile
+    properties:
+      block_description: invert the column of csv file
+      block_name: filezip1.jar
+      block_category: File Management
+      service_type: block
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create: 
+          implementation: Core-LifecycleScripts/task-download-multi.sh
+          inputs:
+            process:
+             args: [{ get_input: create_image }, container8, 'https://github.com/WorkflowCenter-Repositories/ZipFile-Task/raw/v1.0/filezip1.jar']
+        start: 
+          implementation: Core-LifecycleScripts/task-deploy.sh
+          inputs:
+            process:
+             args: [Picard, container8]
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: container8
+      - type: cloudify.relationships.depends_on
+        target: Java7
+      - type: block_link
+        target: Picard-Add
+        source_interfaces:
+          cloudify.interfaces.relationship_lifecycle:
+            preconfigure:
+              implementation: Core-LifecycleScripts/datacopy.sh
+              inputs:
+                process:
+                  args: [Picard-Add/output-SAM_BAM-files, ZipFile/input-1, Picard, container8]
+
+  container9:
+    type: docker_container
+    properties:
+      container_ID: container9
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        start:
+          implementation: Core-LifecycleScripts/container.sh
+          inputs:
+            process:
+              args: [Picard]
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: host
+      - type: cloudify.relationships.depends_on
+        target: ZipFile
+
+  Java8:
+    type: spec_library
+    properties:
+      lib_name: openjdk-7-jre
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: scripts/java-install2.sh
+          inputs:
+            process:
+              args: [container9]
+    relationships:
+      - type: cloudify.relationships.contained_in
+        target: container9
+
   ExportFiles2:
     type: exportfiles
     properties:
@@ -619,7 +685,7 @@ node_templates:
       service_type: block
     relationships:
       - type: cloudify.relationships.contained_in
-        target: container8
+        target: container9
       - type: block_link
         target: Picard-Add
         source_interfaces:
@@ -628,21 +694,26 @@ node_templates:
               implementation: Core-LifecycleScripts/datacopy.sh
               inputs:
                 process:
-                  args: [Picard-Add/output-SAM_BAM-files, ExportFiles2/file-list, Picard, container8]
+                  args: [ZipFile/output-1, ExportFiles2/file-list, Picard, container9]
       - type: cloudify.relationships.depends_on
-        target: Java7
+        target: Java8
     interfaces:
-      cloudify.interfaces.lifecycle:
+      cloudify.interfaces.lifecycle: 
         create: 
           implementation: Core-LifecycleScripts/task-download-multi.sh
           inputs:
             process:
-             args: [{ get_input: create_image }, container8, 'https://github.com/WorkflowCenter-Repositories/ExportFiles-Task/raw/v1.0/exportfiles1.jar']
+             args: [{ get_input: create_image }, container9, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']       
+        configure:
+          implementation: Core-LifecycleScripts/containers-clean.sh
+          inputs:
+            process:
+             args: [container8]
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard, container8]
+             args: [Picard, container9]
 
   finalBlock:
     type: cloudify.nodes.ApplicationModule
@@ -652,7 +723,7 @@ node_templates:
           implementation: Core-LifecycleScripts/containers-clean.sh
           inputs:
             process:
-              args: [container5, container8, container7]
+              args: [container5, container9, container7]
         start:
           implementation: Core-LifecycleScripts/final-inhost.sh
           inputs:
