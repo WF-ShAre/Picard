@@ -1,0 +1,1 @@
+{"relationships": [{"target_name": "SAMTools", "type": "block_link", "target_id": "SAMTools_7d98c"}, {"target_name": "container1", "type": "cloudify.relationships.contained_in", "target_id": "container1_9cf5a"}], "name": "ExportFiles1", "runtime_properties": {}, "state": "started", "node_id": "ExportFiles1", "version": 7, "host_id": "host_2af1d", "id": "ExportFiles1_b3e71"}

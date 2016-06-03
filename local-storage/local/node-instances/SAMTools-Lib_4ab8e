@@ -1,0 +1,1 @@
+{"relationships": [{"target_name": "container1", "type": "cloudify.relationships.contained_in", "target_id": "container1_9cf5a"}], "name": "SAMTools-Lib", "runtime_properties": {}, "state": "started", "node_id": "SAMTools-Lib", "version": 7, "host_id": "host_2af1d", "id": "SAMTools-Lib_4ab8e"}

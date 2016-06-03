@@ -344,7 +344,7 @@ node_templates:
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1container, container1, 'https://github.com/WorkflowCenter-Repositories/ExportFiles-Task/raw/v1.0/exportfiles1.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
@@ -376,7 +376,7 @@ node_templates:
           implementation: Core-LifecycleScripts/task-download-single.sh
           inputs:
             process:
-             args: [Picard-1container, container1, 'https://github.com/WorkflowCenter-Repositories/ExportFiles-Task/raw/v1.0/exportfiles1.jar']
+             args: [Picard-1container, container1, 'https://github.com/rawaqasha/eScBlocks-host/raw/master/exportfiles1.jar']
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
