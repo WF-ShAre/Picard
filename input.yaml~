@@ -1,6 +1,0 @@
-input-dir: 'Input-sample/Data'      #folder path of the input files
-docker-image: 'ubuntu:14.04'   #Docker image
-create_image: 'True'           #True: for automatic creation of Docker images, False otherwise
-
-
-
