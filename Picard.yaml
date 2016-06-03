@@ -17,7 +17,7 @@ inputs:
   docker-image: 
       description: > 
         Docker image to be used for container building
-      default: 'rawa/picard:01'
+      default: 'dtdwd/picard1'
 
   create_image:
       description: > 
