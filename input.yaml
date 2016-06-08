@@ -1,6 +1,7 @@
-input-dir: 'Input-sample/Data'      #folder path of the input files
-docker-image: 'dtdwd/picard1'   #Docker image
-create_image: 'False'           #True: for automatic creation of Docker images, False otherwise
+input-dir: 'Input-sample/Data'         #folder path of the input files
+docker-image: 'dtdwd/picard-zip-pw1'   #Docker image
+pass-word: 'picard'                    #zipfile password
+create_image: 'False'                  #True: for automatic creation of Docker images, False otherwise
 
 
 

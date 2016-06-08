@@ -17,7 +17,7 @@ inputs:
   docker-image: 
       description: > 
         Docker image to be used for container building
-      default: 'dtdwd/picard1'
+      default: 'dtdwd/picard-zip-pw1'
 
   pass-word: 
       description: > 
@@ -633,7 +633,7 @@ node_templates:
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard, container8, "picard"]
+             args: [Picard, container8, { get_input: pass-word }]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container8
