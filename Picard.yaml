@@ -19,6 +19,11 @@ inputs:
         Docker image to be used for container building
       default: 'dtdwd/picard1'
 
+  pass-word: 
+      description: > 
+        Password to be used for compressing the output
+      default: 'picard'
+
   create_image:
       description: > 
         an option to create Docker images
@@ -623,12 +628,12 @@ node_templates:
           implementation: Core-LifecycleScripts/task-download-multi.sh
           inputs:
             process:
-             args: [{ get_input: create_image }, container8, 'https://github.com/WorkflowCenter-Repositories/ZipFile-Task/raw/v1.0/filezip1.jar']
+             args: [{ get_input: create_image }, container8, 'https://github.com/WorkflowCenter-Repositories/ZipFile-Task/raw/v2/filezip1.jar']
         start: 
           implementation: Core-LifecycleScripts/task-deploy.sh
           inputs:
             process:
-             args: [Picard, container8]
+             args: [Picard, container8, "picard"]
     relationships:
       - type: cloudify.relationships.contained_in
         target: container8
