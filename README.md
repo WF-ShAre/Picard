@@ -5,8 +5,7 @@ The Sequence Cleaning workflow (SC) is one of the steps in the Next Generation S
   
   WF-Title: The Sequence Cleaning workflow (SC)    
   version: 1.0    
-  Description: The workflow is one of the steps in the Next Generation Sequencing pipeline. It was designed 
-  
+  Description: The workflow is one of the steps in the Next Generation Sequencing pipeline. It was designed<br />  
                in the e-Science Central system.  
   
 ###WF-Tasks:  
